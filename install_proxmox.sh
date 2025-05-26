@@ -11,7 +11,7 @@ apt update -q && apt install -yq python3-pip python3-venv
 path="/opt/lcdInfo"
 mkdir -p ${path}
 cp -rf * ${path}/
-python -m venv ${path}
+python3 -m venv ${path}
 
 cd ${path}
 source ${path}/bin/activate
