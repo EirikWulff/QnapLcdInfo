@@ -5,6 +5,9 @@ if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 
    exit 1
 fi
+
+apt update -q && apt install -yq python3-pip python3-venv
+
 path="/opt/lcdInfo"
 mkdir -p ${path}
 cp -f * ${path}/
