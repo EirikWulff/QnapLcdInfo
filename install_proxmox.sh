@@ -10,7 +10,7 @@ apt update -q && apt install -yq python3-pip python3-venv
 
 path="/opt/lcdInfo"
 mkdir -p ${path}
-cp -f * ${path}/
+cp -rf * ${path}/
 python -m venv ${path}
 
 cd ${path}
@@ -20,21 +20,8 @@ chmod +x lcdInfo.py
 
 
 # Setup service
-sed -i -e "s|/usr/local/bin/lcdInfo/lcdInfo.py|$path/bin/python $path/lcdInfo.py|g"
-# cat <<EOF > lcdInfo.service
-# [Unit]
-# Description=Qnap LCD Info Service
-# After=syslog.target
+sed -i -e "s|/usr/local/bin/lcdInfo/lcdInfo.py|$path/bin/python $path/lcdInfo.py|g" ${path}/systemd/lcdinfo.service
 
-# [Install]
-# WantedBy=multi-user.target
-
-# [Service]
-# Type=simple
-# Restart=on-failure
-# EOF
-# echo "ExecStart=${path}/bin/python ${path}/lcdInfo.py" >> lcdInfo.service
-# Install service
-mv systemd/lcdinfo.service /etc/systemd/system/
+cp ${path}/systemd/lcdinfo.service /etc/systemd/system/
 systemctl enable lcdinfo.service
 systemctl start lcdinfo.service 
