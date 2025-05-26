@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 path="/opt/lcdInfo"
 mkdir -p ${path}
-cp -f lcdInfo.py requirements.txt ${path}/
+cp -f * ${path}/
 python -m venv ${path}
 
 cd ${path}
