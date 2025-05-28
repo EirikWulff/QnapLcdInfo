@@ -16,7 +16,7 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
 
         mountpoints = ["/"]
         if (len(additional_mountpoints) > 0):
-                mountpoints  additional_mountpoints
+                mountpoints += additional_mountpoints
         for mountpoint in mountpoints:
                 output.appent([mountpoint + ":", str(psutil.disk_usage(mountpoint).percent + "%")])
         # for disk in psutil.disk_partitions():
