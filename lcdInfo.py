@@ -9,8 +9,6 @@ t=None
 load_dotenv()
 blankLcdTimeout=int(os.getenv('SCREEN_TIMEOUT', 10))
 
-def begins_with_one_of(text, substring)
-        return any(text.begins_with(substring))
 
 def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output = []
