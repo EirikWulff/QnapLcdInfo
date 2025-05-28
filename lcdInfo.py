@@ -16,13 +16,22 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: " + str(psutil.swap_memory().percent) + "%"])
 
         mountpoints = ["/"]
-        mountpoints_from_env = os.getenv('MOUNTPOINTS', None)
-        if mountpoints_from_env:
-                additional_mountpoints = mountpoints_from_env.split('|')
+        additional_mountpoints = os.getenv('MOUNTPOINTS', None)
+        mountpoints_names = os.getenv("MOUNTPOINT_NAMES", None)
+        if mountpoints_names:
+                mountpoints_names = mountpoints_names.split('|')
+        if additional_mountpoints:
+                additional_mountpoints = additional_mountpoints.split('|')
                 mountpoints += additional_mountpoints
         
+        mp_index = 0
         for mountpoint in mountpoints:
-                output.append([mountpoint, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
+                if mountpoints_names[mp_index]:
+                        display_name = mountpoints_names[mp_index] + " [" + mountpoint + "]"
+                        mp_index += 1
+                else:
+                        display_name = mountpoint
+                output.append([display_name, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
 
         networks = psutil.net_if_addrs()
         for network in networks:
