@@ -12,8 +12,10 @@ def getDataArray(network_regex="^eth|^enp|^bond"):
         output.append([socket.gethostname(),"Load(5m): "+ str(psutil.getloadavg()[1])])
         output.append(["Last boot:", datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")])
         output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: "+str(psutil.swap_memory().percent)+"%"])
-        for disk in psutil.disk_partitions():
-                output.append(["Usage " + disk.mountpoint ,str(psutil.disk_usage(disk.mountpoint).percent)+ "%"])
+        mountPrefixes = ("/mnt/Storage", "/", "/mnt/ssd", "/mnt/hdd")
+        for disk in psutil.disk_partitions(True):
+                if (disk.mountpoint in mountPrefixes)
+                        output.append(["Usage " + disk.mountpoint ,str(psutil.disk_usage(disk.mountpoint).percent)+ "%"])
         networks = psutil.net_if_addrs()
         for network in networks:
                 if(networks[network][0].netmask and re.search(network_regex,network)):
