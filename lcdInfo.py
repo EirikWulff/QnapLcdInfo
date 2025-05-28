@@ -26,12 +26,12 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         
         mp_index = 0
         for mountpoint in mountpoints:
-                if mountpoints_names[mp_index]:
+                if len(mountpoints_names) > (mp_index + 1):
                         display_name = mountpoints_names[mp_index] + " [" + mountpoint + "]"
-                        mp_index += 1
                 else:
                         display_name = mountpoint
                 output.append([display_name, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
+                mp_index += 1
 
         networks = psutil.net_if_addrs()
         for network in networks:
