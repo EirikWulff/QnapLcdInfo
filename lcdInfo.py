@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-import psutil, socket, re, threading, datetime, time
+import psutil, socket, re, threading, datetime, time, os
+from dotenv import load_dotenv
 from qnapdisplay import QnapDisplay
 
 Lcd = QnapDisplay()
 infoIndex=0
 t=None
 blankLcdTimeout=30;
+load_dotenv()
 
 def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output = []
@@ -13,16 +15,15 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output.append(["Last boot:", datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")])
         output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: " + str(psutil.swap_memory().percent) + "%"])
 
-        additional_mountpoints = ["/mnt/Storage", "/mnt/ssd3", "/mnt/ssd4"]
-        additional_mountpoints += [f"/mnt/hdd{i}" for i in range(1,9)]
         mountpoints = ["/"]
-        if (len(additional_mountpoints) > 0):
+        mountpoints_from_env = os.getenv('MOUNTPOINTS', None)
+        if additional_mountpoints_str:
+                additional_mountpoints = mountpoints_from_env.split('|')
                 mountpoints += additional_mountpoints
+        
         for mountpoint in mountpoints:
-                output.append([mountpoint + ":", str(psutil.disk_usage(mountpoint).percent) + "%"])
-        # for disk in psutil.disk_partitions():
-        #         if (disk.mountpoint in mpToShow):
-        #                 output.append(["Usage " + disk.mountpoint ,str(psutil.disk_usage(disk.mountpoint).percent)+ "%"])
+                output.append([mountpoint, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
+
         networks = psutil.net_if_addrs()
         for network in networks:
                 if(networks[network][0].netmask and re.search(network_regex,network)):
