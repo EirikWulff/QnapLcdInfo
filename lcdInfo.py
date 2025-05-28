@@ -17,7 +17,7 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
 
         mountpoints = ["/"]
         mountpoints_from_env = os.getenv('MOUNTPOINTS', None)
-        if additional_mountpoints_str:
+        if mountpoints_from_env:
                 additional_mountpoints = mountpoints_from_env.split('|')
                 mountpoints += additional_mountpoints
         
