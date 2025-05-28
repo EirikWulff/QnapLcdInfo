@@ -12,13 +12,13 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output = []
         output.append([socket.gethostname(),"Load(5m): "+ str(psutil.getloadavg()[1])])
         output.append(["Last boot:", datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")])
-        output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: "+str(psutil.swap_memory().percent)+"%"])
+        output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: " + str(psutil.swap_memory().percent) + "%"])
 
         mountpoints = ["/"]
         if (len(additional_mountpoints) > 0):
                 mountpoints += additional_mountpoints
         for mountpoint in mountpoints:
-                output.append([mountpoint + ":", str(psutil.disk_usage(mountpoint).percent + "%")])
+                output.append([mountpoint + ":", str(psutil.disk_usage(mountpoint).percent) + "%"])
         # for disk in psutil.disk_partitions():
         #         if (disk.mountpoint in mpToShow):
         #                 output.append(["Usage " + disk.mountpoint ,str(psutil.disk_usage(disk.mountpoint).percent)+ "%"])
