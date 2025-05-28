@@ -6,7 +6,7 @@ Lcd = QnapDisplay()
 infoIndex=0
 t=None
 blankLcdTimeout=30;
-additional_mountpoints = ("/mnt/Storage", "/mnt/hdd1")
+additional_mountpoints = ["/mnt/Storage", "/mnt/hdd1"]
 
 def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output = []
@@ -14,9 +14,9 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output.append(["Last boot:", datetime.datetime.fromtimestamp(psutil.boot_time()).strftime("%Y-%m-%d %H:%M:%S")])
         output.append(["Memory: "+str(psutil.virtual_memory().percent)+"%","Swap: "+str(psutil.swap_memory().percent)+"%"])
 
-        mountpoints = ("/")
+        mountpoints = ["/"]
         if (len(additional_mountpoints) > 0):
-                mountpoints += additional_mountpoints
+                mountpoints  additional_mountpoints
         for mountpoint in mountpoints:
                 output.appent([mountpoint + ":", str(psutil.disk_usage(mountpoint).percent + "%")])
         # for disk in psutil.disk_partitions():
