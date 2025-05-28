@@ -6,8 +6,8 @@ from qnapdisplay import QnapDisplay
 Lcd = QnapDisplay()
 infoIndex=0
 t=None
-blankLcdTimeout=30;
 load_dotenv()
+blankLcdTimeout=int(os.getenv('SCREEN_TIMEOUT', 10))
 
 def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
         output = []
