@@ -28,7 +28,7 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
                 else:
                         display_name = mountpoint.split('/')[-1]
                         if display_name != 'Storage':
-                                display_name = upper(display_name)
+                                display_name = display_name.upper()
                 output.append([display_name + ": " + mountpoint, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
 
         networks = psutil.net_if_addrs()
