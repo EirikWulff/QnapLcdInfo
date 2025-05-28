@@ -27,7 +27,7 @@ def getDataArray(network_regex="^eth|^enp|^bond|^vmbr"):
                         display_name = os.getenv('ROOT_NAME', 'ROOT')
                 else:
                         display_name = mountpoint.split('/')[-1]
-                        if display_name not 'Storage':
+                        if display_name != 'Storage':
                                 display_name = upper(display_name)
                 output.append([display_name + ": " + mountpoint, "Usage: " + str(psutil.disk_usage(mountpoint).percent) + "%"])
 
